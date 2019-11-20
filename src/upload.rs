@@ -1,2 +1,2 @@
-mod data_uploader;
-mod file_uploader;
+pub mod data_uploader;
+pub mod file_uploader;
