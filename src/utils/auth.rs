@@ -58,8 +58,33 @@ impl Auth {
         let mut hmac = Hmac::new(Sha1::new(), self.secret_key.as_bytes());
         hmac.input(data.as_bytes());
 
-        let mut vec: Vec<u8> = Vec::new();
-        vec.copy_from_slice(hmac.result().code());
-        vec
+        hmac.result().code().to_vec()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const DUMMY_ACCESS_KEY: &str = "dummy_access_key";
+    const DUMMY_SECRET_KEY: &str = "dummy_secret_key";
+    const DUMMY_BUCKET: &str = "dummy_bucket";
+    const DUMMY_KEY: &str = "dummy_key";
+
+    #[test]
+    fn generate_upload_token() {
+        let auth = Auth {
+            access_key: DUMMY_ACCESS_KEY.to_string(),
+            secret_key: DUMMY_SECRET_KEY.to_string(),
+        };
+
+        let new_upload_token = auth.upload_token(
+            DUMMY_BUCKET,
+            DUMMY_KEY,
+            600,
+        );
+
+        let items: Vec<&str> = new_upload_token.split(":").collect();
+        assert_eq!(items[0], "dummy_access_key");
     }
 }
