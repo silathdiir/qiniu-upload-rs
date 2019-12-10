@@ -72,7 +72,7 @@ mod tests {
     const DUMMY_KEY: &str = "dummy_key";
 
     #[test]
-    fn generate_upload_token() {
+    fn test_upload_token() {
         let auth = Auth {
             access_key: DUMMY_ACCESS_KEY.to_string(),
             secret_key: DUMMY_SECRET_KEY.to_string(),
