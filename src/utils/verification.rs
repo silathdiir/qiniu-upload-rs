@@ -2,9 +2,9 @@ extern crate flate2;
 
 use flate2::Crc;
 
-fn crc32(data: &Vec<u8>) -> u32 {
+pub(crate) fn crc32(data: &[u8]) -> u32 {
     let mut crc = Crc::new();
-    crc.update(data.as_slice());
+    crc.update(data);
 
     crc.sum()
 }

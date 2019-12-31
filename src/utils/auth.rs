@@ -4,22 +4,18 @@ use crypto::sha1::Sha1;
 use serde_json::json;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-struct Auth {
-    access_key: String,
-    secret_key: String,
+pub struct Auth {
+    pub access_key: String,
+    pub secret_key: String,
 }
 
 impl Auth {
-    pub fn upload_token(
-        &self,
-        bucket: &str,
-        key: &str,
-        expired_seconds: u64,
-    ) -> String {
+    pub fn upload_token(&self, bucket: &str, key: &str, expired_seconds: u64) -> String {
         let json_data = json!({
             "scope": self.scope(bucket, key),
             "deadline": self.deadline(expired_seconds),
-        }).to_string();
+        })
+        .to_string();
 
         let data = base64::encode_config(&json_data, base64::URL_SAFE);
 
@@ -78,11 +74,7 @@ mod tests {
             secret_key: DUMMY_SECRET_KEY.to_string(),
         };
 
-        let new_upload_token = auth.upload_token(
-            DUMMY_BUCKET,
-            DUMMY_KEY,
-            600,
-        );
+        let new_upload_token = auth.upload_token(DUMMY_BUCKET, DUMMY_KEY, 600);
 
         let items: Vec<&str> = new_upload_token.split(":").collect();
         assert_eq!(items[0], "dummy_access_key");
