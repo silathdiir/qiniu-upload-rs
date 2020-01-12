@@ -6,7 +6,7 @@ pub struct QiniuErr {
 
 #[derive(Debug, Clone)]
 pub enum QiniuErrCode {
-    BadResponse,    // Bad Response
-    Inval,          // Invalid argument
-    Unknown,        // Unknown error
+    BadResponse, // Bad Response
+    Inval,       // Invalid argument
+    Unknown,     // Unknown error
 }

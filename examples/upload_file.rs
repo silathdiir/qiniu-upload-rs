@@ -1,4 +1,4 @@
-use qiniu_rs::upload::file_uploader::FileUploader;
+use qiniu_upload_rs::upload::file_uploader::FileUploader;
 
 fn main() {
     println!("Starts to upload a file for an example");
