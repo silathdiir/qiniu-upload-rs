@@ -1,5 +1,5 @@
 [package]
-name = "qiniu-rs"
+name = "qiniu-upload-rs"
 version = "0.0.1"
 authors = ["Steven Gu <asongala@163.com>"]
 edition = "2018"

@@ -12,7 +12,7 @@ pub struct DataUploader {
 
 impl DataUploader {
     pub fn new(auth: Auth) -> Self {
-        Self { auth, }
+        Self { auth }
     }
 
     pub fn upload(
@@ -52,17 +52,28 @@ impl DataUploader {
         mime_type: &str,
         data: &'static [u8],
     ) -> Result<Part, QiniuErr> {
-        let result = Part::bytes(data).file_name(filename.to_string()).mime_str(mime_type);
+        let result = Part::bytes(data)
+            .file_name(filename.to_string())
+            .mime_str(mime_type);
         match result {
             Ok(file_part) => Ok(file_part),
-            Err(err) => Err(QiniuErr { message: err.to_string(), code: QiniuErrCode::Inval }),
+            Err(err) => Err(QiniuErr {
+                message: err.to_string(),
+                code: QiniuErrCode::Inval,
+            }),
         }
     }
 
     fn upload_form(&self, form: Form) -> Result<(), QiniuErr> {
-        let result = Client::new().post(upload::UPLOAD_URL).multipart(form).send();
+        let result = Client::new()
+            .post(upload::UPLOAD_URL)
+            .multipart(form)
+            .send();
         if let Err(err) = result {
-            return Err(QiniuErr { message: err.to_string(), code: QiniuErrCode::Inval })
+            return Err(QiniuErr {
+                message: err.to_string(),
+                code: QiniuErrCode::Inval,
+            });
         }
 
         let status_code = result.unwrap().status();
@@ -70,9 +81,15 @@ impl DataUploader {
             Ok(())
         } else if status_code.is_server_error() {
             let message = status_code.as_str().to_string();
-            Err(QiniuErr { message, code: QiniuErrCode::BadResponse })
+            Err(QiniuErr {
+                message,
+                code: QiniuErrCode::BadResponse,
+            })
         } else {
-            Err(QiniuErr { message: "".to_string(), code: QiniuErrCode::Unknown })
+            Err(QiniuErr {
+                message: "".to_string(),
+                code: QiniuErrCode::Unknown,
+            })
         }
     }
 }

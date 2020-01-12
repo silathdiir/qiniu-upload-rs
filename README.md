@@ -1,1 +1,1 @@
-# qiniu-rs
+# qiniu-upload-rs
