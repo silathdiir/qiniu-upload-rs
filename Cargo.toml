@@ -2,6 +2,11 @@
 name = "qiniu-upload-rs"
 version = "0.0.1"
 authors = ["Steven Gu <asongala@163.com>"]
+license = "MIT"
+description = "Rust version of Qiniu Upload"
+homepage = "https://github.com/silathdiir/qiniu-upload-rs"
+documentation = "https://github.com/silathdiir/qiniu-upload-rs"
+repository = "https://github.com/silathdiir/qiniu-upload-rs"
 edition = "2018"
 
 [dependencies]
