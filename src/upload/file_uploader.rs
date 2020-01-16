@@ -7,7 +7,7 @@ impl FileUploader {
         Self {}
     }
 
-    pub fn upload(&self, key: &str, file_path: &str) -> Result<(), QiniuErr> {
+    pub fn upload(&self, _key: &str, _file_path: &str) -> Result<(), QiniuErr> {
         Ok(())
     }
 }
