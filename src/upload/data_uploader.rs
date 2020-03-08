@@ -1,6 +1,6 @@
 use crate::upload;
 use crate::utils::auth::Auth;
-use crate::utils::qiniu_err::{QiniuErr, QiniuErrCode};
+use crate::utils::qiniu_err::QiniuErr;
 use crate::utils::verification::crc32;
 
 use reqwest::blocking::multipart::{Form, Part};
@@ -57,10 +57,7 @@ impl DataUploader {
             .mime_str(mime_type);
         match result {
             Ok(file_part) => Ok(file_part),
-            Err(err) => Err(QiniuErr {
-                message: err.to_string(),
-                code: QiniuErrCode::Inval,
-            }),
+            Err(err) => Err(QiniuErr::Inval(err.to_string())),
         }
     }
 
@@ -70,10 +67,7 @@ impl DataUploader {
             .multipart(form)
             .send();
         if let Err(err) = result {
-            return Err(QiniuErr {
-                message: err.to_string(),
-                code: QiniuErrCode::Inval,
-            });
+            return Err(QiniuErr::Inval(err.to_string()));
         }
 
         let status_code = result.unwrap().status();
@@ -81,15 +75,9 @@ impl DataUploader {
             Ok(())
         } else if status_code.is_server_error() {
             let message = status_code.as_str().to_string();
-            Err(QiniuErr {
-                message,
-                code: QiniuErrCode::BadResponse,
-            })
+            Err(QiniuErr::BadResponse(message))
         } else {
-            Err(QiniuErr {
-                message: "".to_string(),
-                code: QiniuErrCode::Unknown,
-            })
+            Err(QiniuErr::Unknown)
         }
     }
 }

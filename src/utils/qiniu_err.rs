@@ -1,12 +1,11 @@
-#[derive(Debug, Clone)]
-pub struct QiniuErr {
-    pub message: String,
-    pub code: QiniuErrCode,
-}
+use thiserror::Error;
 
-#[derive(Debug, Clone)]
-pub enum QiniuErrCode {
-    BadResponse, // Bad Response
-    Inval,       // Invalid argument
-    Unknown,     // Unknown error
+#[derive(Clone, Debug, Error)]
+pub enum QiniuErr {
+    #[error("")]
+    BadResponse(String), // Bad Response
+    #[error("")]
+    Inval(String), // Invalid argument
+    #[error("")]
+    Unknown, // Unknown error
 }
