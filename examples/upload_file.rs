@@ -6,7 +6,7 @@ fn main() {
     let file_path = "examples/data/simple.txt";
 
     let uploader = FileUploader::new();
-    uploader.upload("dummy_upload_file", file_path);
+    uploader.upload("dummy_upload_file", file_path).unwrap();
 
     println!("Finishes file upload");
 }
