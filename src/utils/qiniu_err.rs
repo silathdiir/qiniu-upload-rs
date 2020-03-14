@@ -1,11 +1,19 @@
 use thiserror::Error;
 
-#[derive(Clone, Debug, Error)]
+#[derive(Debug, Error)]
 pub enum QiniuErr {
     #[error("")]
-    BadResponse(String), // Bad Response
+    BadResponse(String),
     #[error("")]
-    Inval(String), // Invalid argument
+    IOError(std::io::Error),
     #[error("")]
-    Unknown, // Unknown error
+    Inval(String),
+    #[error("")]
+    Unknown,
+}
+
+impl From<std::io::Error> for QiniuErr {
+    fn from(err: std::io::Error) -> Self {
+        QiniuErr::IOError(err)
+    }
 }
